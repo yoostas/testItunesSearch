@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Automatic">
+    <entity name="HistoryEntity" representedClassName="HistoryEntity" syncable="YES">
+        <attribute name="searchString" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="TrackEntity" representedClassName="TrackEntity" syncable="YES">
+        <attribute name="artistId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="artistName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="artworkUrl30" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="artworkUrl60" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="artworkUrl100" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="collectionName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="primaryGenreName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="releaseDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="trackId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="trackName" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="TrackEntity" positionX="-63" positionY="-18" width="128" height="195"/>
+        <element name="HistoryEntity" positionX="-54" positionY="63" width="128" height="60"/>
+    </elements>
+</model>
