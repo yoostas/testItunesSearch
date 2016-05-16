@@ -24,7 +24,7 @@
 -(void)mapCellWithModel:(TrackEntity *)track andRow:(NSInteger)row{
     switch (row) {
         case 1:
-            [self.textLabel setText:@"Artict"];
+            [self.textLabel setText:@"Artist"];
             [self.detailTextLabel setText:track.artistName];
             break;
         case 2:
