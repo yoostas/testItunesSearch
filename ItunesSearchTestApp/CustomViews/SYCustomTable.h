@@ -7,6 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TrackEntity.h"
+#import "HistoryEntity.h"
+@protocol CellSeletcted
+
+-(void)selectedTrack:(TrackEntity *)track;
+-(void)selectedHistory:(HistoryEntity *)history;
+
+@end
+
 typedef enum {
     CustomTableType_Search  = 0,
     CustomTableType_Detail  = 1,
@@ -15,4 +24,7 @@ typedef enum {
 
 @interface SYCustomTable : UITableView<UITableViewDelegate,UITableViewDataSource>
 -(void) setData:(NSArray *)data forTableViewType:(CustomTableType) type;
+
+@property (nonatomic, weak) NSObject <CellSeletcted> *cs_delegate;
+
 @end

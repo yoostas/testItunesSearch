@@ -14,6 +14,8 @@
 @end
 @implementation SYCustomTable
 
+@synthesize cs_delegate;
+
 -(void)setData:(NSArray *)data forTableViewType:(CustomTableType)type {
     self.delegate = self;
     self.dataSource = self;
@@ -89,14 +91,20 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (self.tableType == CustomTableType_Search) {
-        NSDictionary *userInfo = @{@"entity":self.traks[indexPath.row]};
-        [[NSNotificationCenter defaultCenter]postNotificationName:searchCellTap object:nil userInfo:userInfo];
+        if ([cs_delegate conformsToProtocol:@protocol(CellSeletcted)] && [cs_delegate respondsToSelector:@selector(selectedTrack:)]) {
+            TrackEntity * track = self.traks[indexPath.row];
+            [cs_delegate selectedTrack:track];
+        }
     }
     if (self.tableType == CustomTableType_History) {
-        NSDictionary *userInfo = @{@"entity":self.history[indexPath.row]};
-        [[NSNotificationCenter defaultCenter]postNotificationName:historyCellTap object:nil userInfo:userInfo];
+        if ([cs_delegate conformsToProtocol:@protocol(CellSeletcted)] && [cs_delegate respondsToSelector:@selector(selectedHistory:)]) {
+            HistoryEntity * history = self.history[indexPath.row];
+            [cs_delegate selectedHistory:history];
+        }
     }
 }
+
+
 
 /*
 // Only override drawRect: if you perform custom drawing.

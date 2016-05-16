@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SYMainController : SYBaseViewController<UISearchBarDelegate>
+
+@interface SYMainController : SYBaseViewController<UISearchBarDelegate,CellSeletcted>
 
 @end

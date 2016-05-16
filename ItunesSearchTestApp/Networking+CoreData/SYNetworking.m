@@ -11,7 +11,6 @@
 @interface SYNetworking()
 @property (strong, nonatomic) AFHTTPSessionManager *netManager;
 @property (strong, nonatomic) SYLocalDataManager *dataManager;
-
 @end
 
 @implementation SYNetworking

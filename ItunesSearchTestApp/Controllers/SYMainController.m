@@ -33,6 +33,8 @@
     [super didReceiveMemoryWarning];
 }
 
+
+
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.historySearch = [[SYLocalDataManager sharedManager] selectAllEntities:SYHistoryEntity];
@@ -40,12 +42,6 @@
     if ([self.historySearch count]>0) {
         [self.historyTable setData:self.historySearch forTableViewType:CustomTableType_History];
     }
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(cellTaped:) name:searchCellTap object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(cellTaped:) name:historyCellTap object:nil];
-}
-
--(void)viewWillDisappear:(BOOL)animated {
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
@@ -66,6 +62,7 @@
     }
     [self.netManager seafchForString:searchBar.text withSuccessCallBack:^(NSArray *response) {
         [self.mainSearchTable setData:response forTableViewType:CustomTableType_Search];
+        self.mainSearchTable.cs_delegate = self;
     } ofFailureCallBack:^(NSError *error) {
         [self errorHandle:error];
     }];
@@ -74,10 +71,10 @@
 
 -(BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
     if (self.historySearch.count >0) {
+        self.historyTable.cs_delegate = self;
         [self.darkView setHidden:NO];
         [self showHistoryView];
         [self.historyTable setHidden:NO];
-        
     }
     return YES;
 }
@@ -103,22 +100,18 @@
     [self hideHistoryView];
     [self.view endEditing:YES];
 }
-
--(void)cellTaped:(NSNotification *)notification {
-    if ([notification.name isEqualToString:searchCellTap]) {
-        TrackEntity *track = notification.userInfo[@"entity"];
-        [self performSegueWithIdentifier:@"toDetails" sender:track];
-    }
-    if ([notification.name isEqualToString:historyCellTap]) {
-        HistoryEntity *history = notification.userInfo[@"entity"];
-        [self.mainSearch setText:history.searchString];
-        [self.darkView setHidden:YES];
-        [self.mainSearchTable setUserInteractionEnabled:YES];
-        [self searchBarSearchButtonClicked:self.mainSearch];
-        [self hideHistoryView];
-    }
+#pragma cell delegate
+-(void)selectedTrack:(TrackEntity *)track {
+    [self performSegueWithIdentifier:@"toDetails" sender:track];
 }
 
+-(void)selectedHistory:(HistoryEntity *)history {
+    [self.mainSearch setText:history.searchString];
+    [self.darkView setHidden:YES];
+    [self.mainSearchTable setUserInteractionEnabled:YES];
+    [self searchBarSearchButtonClicked:self.mainSearch];
+    [self hideHistoryView];
+}
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
