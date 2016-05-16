@@ -26,7 +26,6 @@
     else {
         self.history = data;
     }
-    
     [self reloadData];
     [self scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
 }
@@ -75,7 +74,6 @@
     }
 }
 
-
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (self.tableType == CustomTableType_Search) {
         return  self.traks.count;
@@ -103,8 +101,6 @@
         }
     }
 }
-
-
 
 /*
 // Only override drawRect: if you perform custom drawing.

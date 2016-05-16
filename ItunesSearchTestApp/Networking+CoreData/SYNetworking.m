@@ -38,6 +38,7 @@
     
     NSDictionary *parameters = @{@"term": artistOrTrack};
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    __weak __typeof(self)weakSelf = self;
     [self.netManager GET:SEARCH_URL parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -45,7 +46,7 @@
         NSArray *response = responseObject[@"results"];
         NSDictionary *first = [response firstObject];
         NSNumber *artistID = first[@"artistId"];
-        if ([self.dataManager insertAllFromArray:response withEntityName:SYTrackEntity]) {
+        if ([weakSelf.dataManager insertAllFromArray:response withEntityName:SYTrackEntity]) {
             if (artistID) {
                 response = [self.dataManager selectWithQuery:@"artistId == %@" arguments:@[artistID] forEntity:SYTrackEntity];
             }
